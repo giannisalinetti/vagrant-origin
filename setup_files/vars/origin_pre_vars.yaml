@@ -1,0 +1,29 @@
+---
+setup_user: ansible
+production: true
+community: true
+
+# OpenShift SIG released repo
+repos_origin:
+  - epel-release
+  - centos-release-openshift-origin39
+
+# Base packages needed on nodes
+base_packages:
+  - wget
+  - git
+  - net-tools
+  - bind-utils
+  - iptables-services
+  - bridge-utils
+  - bash-completion
+  - kexec-tools
+  - sos
+  - psacct
+
+# Docker 1.13.1 is needed in OpenShift 3.9
+docker_pkg: docker-1.13.1
+docker_svc: docker
+
+# Set the  volume name. Change it if necessary to adapt to the correct block device name
+docker_pv: vdb

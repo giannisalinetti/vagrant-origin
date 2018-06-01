@@ -1,0 +1,125 @@
+# OpenShift Origin advanced installation
+[OSEv3:children]
+masters
+etcd
+nodes
+nfs
+
+[OSEv3:vars]
+ansible_ssh_user=vagrant
+deployment_type=origin
+openshift_release=v3.9
+
+# Disable disk and memory checks
+openshift_disable_check=memory_availability,disk_availability,docker_storage,docker_storage_driver,docker_image_availability,package_version,package_availability,package_update
+
+# Configure authentication
+# Users must be defined on master node using htpasswd command
+openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/master/htpasswd'}]
+openshift_master_htpasswd_users={'admin': '$apr1$vpZQCxC3$DiD.xc8KG0lJVrG2prR0B1', 'developer': '$apr1$rgYGtPou$Abrt/PMMCJFw/wfd5JUam/'}
+
+# Configure default subdomain
+openshift_master_default_subdomain=192.168.122.172.xip.io
+
+# Configure Network SDN plugin
+os_sdn_network_plugin_name='redhat/openshift-ovs-multitenant'
+
+# Disable service catalog
+openshift_enable_service_catalog=false
+template_service_broker_install=false
+
+# Configure default pod selectors
+openshift_hosted_router_selector='region=infra'
+openshift_hosted_registry_selector='region=infra'
+osm_default_node_selector='region=primary'
+
+# Configure Registry storage
+openshift_hosted_registry_storage_kind=nfs
+openshift_hosted_registry_storage_access_modes=['ReadWriteMany']
+openshift_hosted_registry_storage_nfs_directory=/exports
+openshift_hosted_registry_storage_nfs_options='*(rw,root_squash)'
+openshift_hosted_registry_storage_volume_name=registry
+openshift_hosted_registry_storage_volume_size=20Gi
+
+# Configure Cluster Metrics
+openshift_metrics_install_metrics=true
+openshift_metrics_storage_kind=nfs
+openshift_metrics_storage_access_modes=['ReadWriteOnce']
+openshift_metrics_storage_nfs_directory=/exports
+openshift_metrics_storage_nfs_options='*(rw,root_squash)'
+openshift_metrics_storage_volume_name=metrics
+openshift_metrics_storage_volume_size=2Gi
+# openshift_metrics_install_hawkular_agent=true
+# openshift_metrics_cassandra_nodeselector={"region":"infra"}
+# openshift_metrics_hawkular_nodeselector={"region":"infra"}
+# openshift_metrics_heapster_nodeselector={"region":"infra"}
+
+# Deploy Prometheus
+openshift_hosted_prometheus_deploy=false
+
+# Prometheus storage config
+openshift_prometheus_storage_kind=nfs
+openshift_prometheus_storage_access_modes=['ReadWriteOnce']
+openshift_prometheus_storage_nfs_directory=/exports
+openshift_prometheus_storage_nfs_options='*(rw,root_squash)'
+openshift_prometheus_storage_volume_name=prometheus
+openshift_prometheus_storage_volume_size=10Gi
+openshift_prometheus_storage_labels={'storage': 'prometheus'}
+openshift_prometheus_storage_type='pvc'
+openshift_prometheus_storage_class=glusterfs-storage
+# For prometheus-alertmanager
+openshift_prometheus_alertmanager_storage_kind=nfs
+openshift_prometheus_alertmanager_storage_access_modes=['ReadWriteOnce']
+openshift_prometheus_alertmanager_storage_nfs_directory=/exports
+openshift_prometheus_alertmanager_storage_nfs_options='*(rw,root_squash)'
+openshift_prometheus_alertmanager_storage_volume_name=prometheus-alertmanager
+openshift_prometheus_alertmanager_storage_volume_size=10Gi
+openshift_prometheus_alertmanager_storage_labels={'storage': 'prometheus-alertmanager'}
+openshift_prometheus_alertmanager_storage_type='pvc'
+openshift_prometheus_alertmanager_storage_class=glusterfs-storage
+# For prometheus-alertbuffer
+openshift_prometheus_alertbuffer_storage_kind=nfs
+openshift_prometheus_alertbuffer_storage_access_modes=['ReadWriteOnce']
+openshift_prometheus_alertbuffer_storage_nfs_directory=/exports
+openshift_prometheus_alertbuffer_storage_nfs_options='*(rw,root_squash)'
+openshift_prometheus_alertbuffer_storage_volume_name=prometheus-alertbuffer
+openshift_prometheus_alertbuffer_storage_volume_size=10Gi
+openshift_prometheus_alertbuffer_storage_labels={'storage': 'prometheus-alertbuffer'}
+openshift_prometheus_alertbuffer_storage_type='pvc'
+openshift_prometheus_alertbuffer_storage_class=glusterfs-storage
+
+# Grafana Configuration
+#grafana_namespace=grafana
+#grafana_user=grafana
+#grafana_password=grafana
+#grafana_datasource_name="example"
+#grafana_prometheus_namespace="openshift-metrics"
+#grafana_prometheus_sa=prometheus
+#grafana_node_exporter=false
+#grafana_graph_granularity="2m"
+
+# Configure cluster logging
+openshift_logging_install_logging=false
+openshift_logging_storage_kind=nfs
+openshift_logging_storage_access_modes=['ReadWriteOnce']
+openshift_logging_storage_nfs_directory=/exports
+openshift_logging_storage_nfs_options='*(rw,root_squash)'
+openshift_logging_storage_volume_name=logging
+openshift_logging_storage_volume_size=2Gi
+# openshift_logging_kibana_nodeselector={"region":"infra"}
+# openshift_logging_es_nodeselector={"region":"infra"}
+
+[masters]
+ocp-master-01.traininglab.com
+
+[etcd]
+ocp-master-01.traininglab.com
+
+[nfs]
+ocp-master-01.traininglab.com
+
+[nodes]
+ocp-master-01.traininglab.com
+ocp-infra-01.traininglab.com openshift_node_labels="{'region': 'infra'}"
+ocp-apps-01.traininglab.com openshift_node_labels="{'region': 'primary'}"
+ocp-apps-02.traininglab.com openshift_node_labels="{'region': 'primary'}"

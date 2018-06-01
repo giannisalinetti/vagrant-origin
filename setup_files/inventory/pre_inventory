@@ -1,0 +1,13 @@
+[origin_masters]
+ocp-master-01.traininglab.com
+
+[origin_infra]
+ocp-infra-01.traininglab.com 
+
+[origin_nodes]
+ocp-master-01.traininglab.com
+ocp-infra-01.traininglab.com 
+ocp-apps-01.traininglab.com 
+ocp-apps-02.traininglab.com
+
+[new_nodes]
