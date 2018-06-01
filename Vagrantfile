@@ -39,6 +39,8 @@ Vagrant.configure("2") do |config|
         bastion.vm.provision "file", source: "keys/ocplab_rsa.pub", destination: "~/.ssh/authorized_keys"
         # Fix for master-api service startup issue on vagrant, generically applied everywhere
         bastion.vm.provision "shell", inline: "sudo sed -i \"/^127.0.0.1.*$HOSTNAME/d\" /etc/hosts"
+        # Create a symbolic link to setup files folder
+        bastion.vm.provision "shell", inline: "ln -s /vagrant/setup_files /home/vagrant/origin-setup"
 
     end
 
