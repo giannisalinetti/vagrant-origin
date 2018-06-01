@@ -16,8 +16,8 @@ openshift_disable_check=memory_availability,disk_availability,docker_storage,doc
 
 # Configure ha cluster
 openshift_master_cluster_method=native
-openshift_master_cluster_hostname=ocp-cluster.traininglab.com
-openshift_master_cluster_public_hostname=ocp-cluster.traininglab.com
+openshift_master_cluster_hostname=ocp-cluster
+openshift_master_cluster_public_hostname=ocp-cluster
 
 # Configure authentication
 # Users must be defined on master node using htpasswd command
@@ -121,27 +121,27 @@ openshift_logging_storage_volume_size=2Gi
 # openshift_logging_es_nodeselector={"region":"infra"}
 
 [masters]
-ocp-master-01.traininglab.com
-ocp-master-02.traininglab.com
-ocp-master-03.traininglab.com
+ocp-master-01
+ocp-master-02
+ocp-master-03
 
 [etcd]
-ocp-master-01.traininglab.com
-ocp-master-02.traininglab.com
-ocp-master-03.traininglab.com
+ocp-master-01
+ocp-master-02
+ocp-master-03
 
 [nfs]
-ocp-master-01.traininglab.com
+ocp-master-01
 
 [lb]
-ocp-cluster.traininglab.com
+ocp-cluster
 
 [nodes]
-ocp-master-01.traininglab.com
-ocp-master-02.traininglab.com
-ocp-master-03.traininglab.com
-ocp-infra-01.traininglab.com openshift_node_labels="{'region': 'infra'}"
-ocp-infra-02.traininglab.com openshift_node_labels="{'region': 'infra'}"
-ocp-infra-03.traininglab.com openshift_node_labels="{'region': 'infra'}"
-ocp-apps-01.traininglab.com openshift_node_labels="{'region': 'primary'}"
-ocp-apps-02.traininglab.com openshift_node_labels="{'region': 'primary'}"
+ocp-master-01
+ocp-master-02
+ocp-master-03
+ocp-infra-01 openshift_node_labels="{'region': 'infra'}"
+ocp-infra-02 openshift_node_labels="{'region': 'infra'}"
+ocp-infra-03 openshift_node_labels="{'region': 'infra'}"
+ocp-apps-01 openshift_node_labels="{'region': 'primary'}"
+ocp-apps-02 openshift_node_labels="{'region': 'primary'}"

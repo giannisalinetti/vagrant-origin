@@ -110,16 +110,16 @@ openshift_logging_storage_volume_size=2Gi
 # openshift_logging_es_nodeselector={"region":"infra"}
 
 [masters]
-ocp-master-01.traininglab.com
+ocp-master-01
 
 [etcd]
-ocp-master-01.traininglab.com
+ocp-master-01
 
 [nfs]
-ocp-master-01.traininglab.com
+ocp-master-01
 
 [nodes]
-ocp-master-01.traininglab.com
-ocp-infra-01.traininglab.com openshift_node_labels="{'region': 'infra'}"
-ocp-apps-01.traininglab.com openshift_node_labels="{'region': 'primary'}"
-ocp-apps-02.traininglab.com openshift_node_labels="{'region': 'primary'}"
+ocp-master-01
+ocp-infra-01 openshift_node_labels="{'region': 'infra'}"
+ocp-apps-01 openshift_node_labels="{'region': 'primary'}"
+ocp-apps-02 openshift_node_labels="{'region': 'primary'}"
