@@ -18,8 +18,11 @@ openshift_disable_check=memory_availability,disk_availability,docker_storage,doc
 openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/master/htpasswd'}]
 openshift_master_htpasswd_users={'admin': '$apr1$vpZQCxC3$DiD.xc8KG0lJVrG2prR0B1', 'developer': '$apr1$rgYGtPou$Abrt/PMMCJFw/wfd5JUam/'}
 
+# Configure cluster hostname
+openshift_master_cluster_hostname=ocp-master-01
+
 # Configure default subdomain
-openshift_master_default_subdomain=192.168.122.172.xip.io
+openshift_master_default_subdomain=192.168.121.143.xip.io
 
 # Configure Network SDN plugin
 os_sdn_network_plugin_name='redhat/openshift-ovs-multitenant'

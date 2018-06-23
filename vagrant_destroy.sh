@@ -2,14 +2,22 @@
 
 KEY_DIR=keys
 
+
+#####################################################################
+# Get machines list (Vagrant reports only the first ocp-cluster
+#####################################################################
+MACHINES=$(ls .vagrant/machines)
+
 #####################################################################
 # Execute vagrant destroy 
 #####################################################################
-vagrant destroy
-err=$?; if [ $err -ne 0 ]; then
-    echo "Error during vagrant machines startup process: $err"
-    exit 1
-fi
+for m in $MACHINES; do
+    vagrant destroy $m
+    err=$?; if [ $err -ne 0 ]; then
+        echo "Error removing vagrant machine $m: $err"
+        exit 1
+    fi
+done
 
 #####################################################################
 # SSH keys removal

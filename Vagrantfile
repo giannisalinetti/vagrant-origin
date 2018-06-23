@@ -47,7 +47,7 @@ Vagrant.configure("2") do |config|
     # Configure master nodes
     (1..MASTERS).each do |i|
         config.vm.define "ocp-master-0#{i}" do |master|
-            master.vm.hostname = "ocp-master-0#{i}"
+            master.vm.host_name = "ocp-master-0#{i}"
             master.vm.network :private_network, ip: "192.168.10.10#{i}"
             (0..DISKS-7).each do |d|
                 master.vm.provider :virtualbox do |vb|
@@ -72,7 +72,7 @@ Vagrant.configure("2") do |config|
     # Configure infra nodes
     (1..INFRA).each do |i|
         config.vm.define "ocp-infra-0#{i}" do |infra|
-            infra.vm.hostname = "ocp-infra-0#{i}"
+            infra.vm.host_name = "ocp-infra-0#{i}"
             infra.vm.network :private_network, ip: "192.168.10.11#{i}"
             (0..DISKS-1).each do |d|
                 infra.vm.provider :virtualbox do |vb|
@@ -98,7 +98,7 @@ Vagrant.configure("2") do |config|
     # Configure apps nodes
     (1..APPS).each do |i|
         config.vm.define "ocp-apps-0#{i}" do |apps|
-            apps.vm.hostname = "ocp-apps-0#{i}"
+            apps.vm.host_name = "ocp-apps-0#{i}"
             apps.vm.network :private_network, ip: "192.168.10.12#{i}"
             # Allocate only (DISKS-4) disks on masters.
             (0..DISKS-4).each do |d|
